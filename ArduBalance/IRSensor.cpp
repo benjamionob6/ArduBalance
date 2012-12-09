@@ -1,19 +1,12 @@
 #include "IRSensor.h"
 
-IRSensor::IRSensor(int fwd_inport, int bwd_inport) : Filter1(), Filter2() {
+IRSensor::IRSensor(int fwd_inport, int bwd_inport) {
   //Assign Port
   fwd_port = fwd_inport;
   bwd_port = bwd_inport;
   pinMode(fwd_port,INPUT);
   pinMode(bwd_port,INPUT);
   
-  Filter1.begin();
-  Filter1.setFilter('c');
-  Filter1.setOrder(1);
-  
-  Filter2.begin();
-  Filter2.setFilter('c');
-  Filter2.setOrder(1);
   
   //Zero out readings
   for ( int i = 0; i < 4; i++){
@@ -41,29 +34,6 @@ short IRSensor::getBalanceError(int which){
 
 IRSensor::~IRSensor(){}
 
-//void quickSort(short *arr, int elements) {
-//  short  piv, beg[10], end[10], i=0, L, R, swap ;
-//
-//  beg[0]=0; end[0]=elements;
-//  while (i>=0) {
-//    L=beg[i]; R=end[i]-1;
-//    if (L<R) {
-//      piv=arr[L];
-//      while (L<R) {
-//        while (arr[R]>=piv && L<R) R--; if (L<R) arr[L++]=arr[R];
-//        while (arr[L]<=piv && L<R) L++; if (L<R) arr[R--]=arr[L]; 
-//      }
-//      arr[L]=piv; beg[i+1]=L+1; end[i+1]=end[i]; end[i++]=L;
-//      if (end[i]-beg[i]>end[i-1]-beg[i-1]) {
-//        swap=beg[i]; beg[i]=beg[i-1]; beg[i-1]=swap;
-//        swap=end[i]; end[i]=end[i-1]; end[i-1]=swap; 
-//      }
-//   } else {
-//      i--; 
-//   }
-//  }
-//}
-
 void IRSensor::takeReading(){
  
   int new_fwd = analogRead(fwd_port);
@@ -80,7 +50,7 @@ void IRSensor::takeReading(){
   }
 
   if ( fwd_lin + bwd_lin < 270 && fwd_lin + bwd_lin > 220 ){
-     fwd_last = (fwd_lin * 0.75) + ((250-bwd_lin) * 0.25); //Filter1.run(fwd_lin);
+     fwd_last = (fwd_lin * 0.75) + ((250-bwd_lin) * 0.25);
      bwd_last = (bwd_lin * 0.75) + ((250-fwd_lin) * 0.25);
   }
 }

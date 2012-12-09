@@ -42,8 +42,6 @@ void MotorDriver::SetMotors(int pwm_A, int pwm_B){
     digitalWrite(port_A_Break,HIGH);
     analogWrite(port_pwm_A,0);
   } else {
-    //if (pwm_A > 10 && pwm_A < 25){ pwm_A = 25;}
-    //if (pwm_A < 10 && pwm_A > -25){ pwm_A = -25;}
     digitalWrite(port_A_Dir,LOW);
     digitalWrite(port_A_Break,LOW);
     
@@ -51,6 +49,5 @@ void MotorDriver::SetMotors(int pwm_A, int pwm_B){
     digitalWrite(port_B_Dir, pwm_A >= 0 ? HIGH : LOW);
     
     analogWrite(port_pwm_A, min(abs(pwm_A),255)); 
-    Serial.println( min((pwm_A),255));   
-  }
+ }
 }
